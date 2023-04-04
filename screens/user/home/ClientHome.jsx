@@ -4,7 +4,7 @@ import tw from 'twrnc'
 import { Icon } from '@rneui/base'
 import Colors from '../../../Constants/Colors'
 import carpenter from '../../../assets/images/carpenter.jpg'
-const ClientHome = () => {
+const ClientHome = (props) => {
   const [selectedId,setSelectedId] = useState(6)
 
   const foodFilter = [
@@ -47,12 +47,12 @@ const ClientHome = () => {
       <Text style={tw `ml-3 font-semibold`}>Yves lionel Diomande</Text>
       </View>
        {/* Icon for notifications */}
-       <View style={tw `flex shadow-lg rounded-lg h-10  bg-white  w-12 justify-center items-center `}>
+       <TouchableOpacity onPress={()=> props.navigation.navigate("notifications")} style={tw `flex shadow-lg rounded-lg h-10  bg-white  w-12 justify-center items-center `}>
        <View style={tw `flex justify-center items-center relative`} >
         <View style={tw `h-2 w-2 bg-yellow-400 rounded-full absolute top-0 -right-1`}></View>
         <Icon type='ionicon' color="black" name='notifications' />
        </View>
-       </View>
+       </TouchableOpacity>
       
     </View>
     <View style={tw `flex-1 px-4`} >
