@@ -4,6 +4,9 @@ import tw from 'twrnc'
 import { Icon } from '@rneui/base'
 import Colors from '../../../Constants/Colors'
 import carpenter from '../../../assets/images/carpenter.jpg'
+import Barber from '../../../assets/images/bar.jpg'
+import massage from '../../../assets/images/masseur.jpg'
+import electrician from '../../../assets/images/eletrician.jpg'
 const ClientHome = (props) => {
   const [selectedId,setSelectedId] = useState(6)
 
@@ -38,8 +41,36 @@ const ClientHome = (props) => {
     },
    
   ]
+
+  const popularServices = [ 
+     {
+    id : 1,
+    name : "Barber",
+    imageLink : Barber,
+    price : "34",
+    rating : "4.3"
+  } ,
+     {
+    id : 1,
+    name : "Massage",
+    imageLink : massage,
+    price : "60",
+    rating : "4"
+
+
+  } ,
+     {
+    id : 1,
+    name : "Electrician",
+    imageLink : electrician,
+    price : "14",
+    rating : "5"
+
+  } ,
+
+]
   return (
-    <View style={tw `bg-white flex-1 pt-10`}>
+    <ScrollView showsVerticalScrollIndicator={false} style={tw `bg-white flex-1 pb-20 pt-10`}>
       {/* NavBar */}
       <View style={ tw `h-12 bg-white  flex-row px-5 items-center justify-between `} >
       <View style={ tw `flex flex-row items-center`}>
@@ -86,8 +117,34 @@ const ClientHome = (props) => {
     </View>
     <Text style={tw `text-2xl tracking-wide font-medium`}>Popular services</Text>
 
+  <View style={tw `flex-1 `}>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={tw `mt-2`} >
+        { popularServices.map(popS => (<View style={tw `bg-white mx-2  h-50 mb-20 w-45 rounded-xl shadow`} >
+    {/* iamge and heart */}
+    <View style={tw `h-30 bg-white relative w-full rounded-xl`} >
+      {/* iamge */}
+      <Image style={tw `h-30 bg-blue-500 w-full  rounded-xl`} source={popS.imageLink} />
+      {/* like */}
+      <View style={tw `h-10 w-10 top-3 right-4 bg-white absolute items-center justify-center rounded-full z-40`} >
+        <Icon type='ionicon' name='heart-outline'  color={Colors.primaryColor} />
+      </View>
     </View>
+    {/* Title */}
+    <Text style={tw `pl-2 text-4 mt-2`}>{popS.name}</Text>
+    <View style={tw ` flex-row   px-4 mt-1 justify-between  pl-2`}>
+            <Text style={tw `font-bold text-2xl`}> {popS.price} $</Text>
+           
+           <View style={tw `flex-row  items-center`} >
+           <Icon type='ionicon' name='star' color={Colors.primaryColor} />
+           <Text style={tw `font-bold text-[${Colors.primaryColor}] `}> {popS.rating}</Text>
+           </View>
+          </View>
+   </View> )) }
+    </ScrollView>
+  </View>
+   
     </View>
+    </ScrollView>
   )
 }
 

@@ -9,7 +9,7 @@ const NotificationsScreen = () => {
   const navigation = useNavigation()
 
   const HeaderLeft = () => ( 
-    <TouchableOpacity onPress={()=> navigation.goBack() } style={tw `h-10 items-center justify-center rounded-lg mr-5 w-10 bg-[${Colors.blackColor}]`} >
+    <TouchableOpacity onPress={()=> navigation.goBack() } style={tw `h-10 mb-3 items-center justify-center rounded-lg mr-5 w-10 bg-[${Colors.blackColor}]`} >
       <Icon  name='arrow-back-outline' color="white" type='ionicon' />
     </TouchableOpacity> 
   );

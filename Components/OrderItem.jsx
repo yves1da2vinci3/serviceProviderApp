@@ -5,8 +5,11 @@ import tw from 'twrnc'
 import { Icon, Image } from '@rneui/themed'
 import Cooking from '../assets/images/cooking.jpg'
 import Colors from '../Constants/Colors'
+import { TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
-const OrderItem = () => {
+const OrderItem = (props) => {
+  const navigation = useNavigation()
   return (
     <View style={tw `h-58 mt-3 bg-white shadow-md border-gray-100 border-[0.1] rounded-lg p-2 flex-col `} >
          {/*Prodiver  */}
@@ -42,14 +45,14 @@ const OrderItem = () => {
 
         {/* Message */}
         <View style={tw `h-9 px-4  flex-row items-center `}>
-          <View style={tw `flex-row items-center mr-2`}>
+          <TouchableOpacity onPress={()=> navigation.navigate("chat")} style={tw `flex-row items-center mr-2`}>
           <Icon name='comment-alt' color={Colors.primaryColor}  type='font-awesome-5'/>
             <Text style={tw `font-semibold ml-2`}>Chat with him</Text>
-          </View>
-          <View style={tw `flex-row items-center mr-2`}>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=> navigation.navigate("payment")} style={tw `flex-row items-center mr-2`}>
             <Icon name='credit-card' color={Colors.primaryColor}  type='font-awesome-5'/>
             <Text style={tw `font-semibold ml-2`}>Pay for  the service</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         </View>
   )
