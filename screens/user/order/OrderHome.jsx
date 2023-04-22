@@ -28,9 +28,9 @@ const OrderHome = () => {
   },
 ]
   return (
-    <View style={tw `flex-1 bg-[#FDFDFD] p-5`}>
+    <View style={tw `flex-1  bg-[#FDFDFD] p-5 pt-10`}>
       
-      <View style={tw `h-20 `} >
+      <View style={tw `h-20  `} >
         <ScrollView  showsHorizontalScrollIndicator={false} contentContainerStyle={tw `items-center`} horizontal={true} >
            {
             FilterOptions.map((options,index)=> (<TouchableOpacity onPress={()=> setSelectedId(options.id)} key={index} style={tw `mx-3 rounded-lg  items-center  ${options.id === selectedId ? `bg-[${Colors.blackColor}]` : "" }   p-4 justify-center`} ><Text style={tw ` ${options.id === selectedId ? `text-white` : "text-gray-500" }  font-bold`}>{options.name}</Text></TouchableOpacity>))

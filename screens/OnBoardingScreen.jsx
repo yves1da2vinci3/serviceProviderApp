@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image ,ScrollView} from 'react-native'
 import React, { useState } from 'react'
 import tw from 'twrnc'
 import Colors from '../Constants/Colors'
@@ -20,7 +20,7 @@ const OnBoardingScreen = (props) => {
     DescriptionMap.set("1"," Our affordable and convenient cooking services are designed to make your life easier.")
     DescriptionMap.set("2"," Our affordable and reliable driving services are designed to meet your needs and exceed your expectations.")
   return (
-    <View style={tw `flex-1 bg-white pt-10 px-4`}>
+    <ScrollView showsVerticalScrollIndicator={false} style={tw `flex-1 bg-white pt-10 px-4`}>
       <View style={tw `h-118 relative  rounded-[20] w-full bg-[${Colors.primaryColor}]`} >
 
           {/* Back Button */}
@@ -40,7 +40,7 @@ const OnBoardingScreen = (props) => {
               <Text style={tw `text-white font-bold text-lg`}>{selectId +1>2 ? "Continue" : "Next"}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 

@@ -4,8 +4,8 @@ import tw from 'twrnc'
 import Colors from '../../../Constants/Colors'
 import { CheckBox, Icon } from '@rneui/base'
 import { useNavigation } from '@react-navigation/native'
-const PaymentScreen = () => {
-    const  [selectedId,setselectedId] = useState(0)
+const PaymentScreen = (props) => {
+    const  [selectedId,setselectedId] = useState(1)
 
     const paymentMethods = [ 
         {
@@ -74,7 +74,7 @@ const PaymentScreen = () => {
            <Text style={tw `font-bold text-xl  `}> 55.00 $</Text>
            </View>
           </View>
-          <TouchableOpacity onPress={()=> props.navigation.navigate("secondSignup")}  style={ tw `bg-[${Colors.primaryColor}] h-15 mt-15  flex justify-center items-center rounded-xl w-36 self-center`} >
+          <TouchableOpacity onPress={()=> props.navigation.navigate("rating")}  style={ tw `bg-[${Colors.primaryColor}] h-15 mt-15  flex justify-center items-center rounded-xl w-36 self-center`} >
          <Text style={tw`font-bold text-lg text-white`}>Pay Now</Text>
      </TouchableOpacity>
         </View>
