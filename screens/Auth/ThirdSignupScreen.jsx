@@ -41,7 +41,7 @@ const ThirdSignup = (props) => {
         </View>
     </View>
     {/* Mot de passe */}
-    <TouchableOpacity onPress={()=> props.navigation.navigate("client",{ fromSignup : true })}  style={ tw ` absolute bottom-6 self-center bg-[${Colors.primaryColor}] h-14 mt-36 flex justify-center items-center rounded-lg w-full`} >
+    <TouchableOpacity onPress={()=> props.navigation.navigate("service",{ fromSignup : true })}  style={ tw ` absolute bottom-6 self-center bg-[${Colors.primaryColor}] h-14 mt-36 flex justify-center items-center rounded-lg w-full`} >
     <Text style={tw `capitalize text-white text-xl font-semibold`} >Finalize</Text>
   </TouchableOpacity>
     </View>

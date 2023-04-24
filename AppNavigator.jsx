@@ -8,6 +8,7 @@ import FirstSignupScreen from './screens/Auth/FirstSignupScreen'
 import SecondSignupScreen from './screens/Auth/SecondSignupScreen'
 import ThirdSignupScreen from './screens/Auth/ThirdSignupScreen'
 import ClientNav from './Navigators/bottomBar/ClientBottomNav'
+import ProviderBottomNav from './Navigators/bottomBar/ProviderBottomNav'
 const AppNavigator = () => {
     const Stack = createNativeStackNavigator()
   return (
@@ -20,6 +21,7 @@ const AppNavigator = () => {
             <Stack.Screen options={{ headerShown : false }} name='secondSignup' component={SecondSignupScreen} />
             <Stack.Screen options={{ headerShown : true }} name='thirdSignup' component={ThirdSignupScreen} />
             <Stack.Screen options={{ headerShown : false }} name='client' component={ClientNav} />
+            <Stack.Screen options={{ headerShown : false }} name='service' component={ProviderBottomNav} />
 
         </Stack.Navigator>
    
