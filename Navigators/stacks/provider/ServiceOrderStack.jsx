@@ -5,8 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 const ServiceOrderStack = () => {
     const Stack = createNativeStackNavigator()
     return (
-      <Stack.Navigator>
-       <Stack.Screen name='serviceOrderHome' component={OrderHome}  />
+      <Stack.Navigator  >
+       <Stack.Screen options={{ headerShown : false }} name='serviceOrderHome' component={OrderHome}  />
       </Stack.Navigator>
   )
 }
