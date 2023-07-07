@@ -50,7 +50,7 @@ const NotificationsScreen = () => {
       <ScrollView>
      
        { isLoading ? <Text>loading</Text>  : notifications.map((notifi,index)=> (
-        <NotificationItem key={index} />
+        <NotificationItem notification={notifi} key={index} />
        )) }
        
       </ScrollView>

@@ -70,7 +70,7 @@ const fetchServices = async() => {
 
     </View>
     <View style={tw ` flex-row   px-4 mt-1 justify-between  pl-2`}>
-            <Text style={tw `font-bold text-2xl`}> {service.hourRate} $</Text>
+            <Text style={tw `font-bold text-2xl`}> {service.hourRate} $/hour</Text>
            
            <View style={tw `flex-row  items-center`} >
            <Icon type='ionicon' name='star' color={Colors.primaryColor} />

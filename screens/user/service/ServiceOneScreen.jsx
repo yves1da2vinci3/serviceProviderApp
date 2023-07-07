@@ -4,33 +4,23 @@ import tw from 'twrnc'
 import { useNavigation } from '@react-navigation/native'
 import { Avatar, Icon } from '@rneui/base'
 import Colors from '../../../Constants/Colors'
-import massage from '../../../assets/images/masseur.jpg'
 import Accordion from '../../../Components/Accordion'
 import ReviewItem from '../../../Components/ReviewItem'
 import { BottomSheet } from '@rneui/themed'
-import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment'
+
 import httpClient, { apiUrl } from '../../../config/api'
 import Loader from '../../../Components/Loader'
+import ReservationStack from './MakeReservation/ReservationStack'
+import TimeAndLocation from './MakeReservation/TimeAndLocation'
+import PickDate from './MakeReservation/PickDate'
 const ServiceOneScreen = (props) => {
-  const [minDate, setMinDate] = useState('')
   const [serviceDate, setServiceDate] = useState('')
-  const [displayDate, setdisplayDate] = useState('')
+ 
   const [service,setService] = useState()
   const [ratings,setratings] = useState([])
   const [isLoading,setIsLoading] = useState(true)
  const [visible,setVisible] = useState(false)
-  useEffect(()=>{
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    setMinDate(tomorrow.toISOString().split('T')[0])
-  },[])
-  const onDateChange = (date) => {
-    console.log(  date.toISOString()) 
-    setdisplayDate(moment(date).format('DD MMM YYYY'))
-    setServiceDate(date.toISOString().split("T")[0])
-
-   }
+ const [status,setStatus] =useState(1)
   const navigation = useNavigation()
 
   const HeaderLeft = () => ( 
@@ -57,7 +47,7 @@ const ServiceOneScreen = (props) => {
   },[navigation])
   return (
     <ScrollView  showsVerticalScrollIndicator={false} style={tw `bg-white flex-1 p-2`}>
-     <TouchableOpacity activeOpacity={0.6}  style={tw `bg-white   h-65 mb-8 w-full rounded-xl `} >
+     <TouchableOpacity activeOpacity={0.6}  style={tw `bg-white   h-65 mb-1 w-full rounded-xl `} >
     {/* iamge and heart */}
     <View style={tw `h-52 bg-white relative w-full rounded-xl`} >
       {/* iamge */}
@@ -67,20 +57,12 @@ const ServiceOneScreen = (props) => {
         <Icon type='ionicon' name='heart-outline'  color={Colors.primaryColor} />
       </View>
     </View>
-    {/* Title */}
-    <View style={tw `flex-row justify-between px-3 items-center`} >
-    <Text style={tw `pl-2 text-4 mt-2`}>{isLoading?"..." :service.title}</Text>
-
-    </View>
+    
   
    </TouchableOpacity>
    <Text style={tw `text-lg font-semibold`}>Description</Text>
    <Text style={tw `text-lg`}>{isLoading? "..." : service.description}</Text>
-   <View style={tw `flex-row justify-between  items-center`} >
-    <Text style={tw `pl-2 text-3 font-semibold text-gray-400 mt-2`}>12/03/2023 12h30min~13h30min</Text>
-    <Text style={tw `pl-2 text-3 font-semibold text-gray-400 mt-2`}>1h00min</Text>
-
-    </View>
+   
     <View style={tw `h-20  w-full px-2  flex-row items-center`}>
             <Avatar  size={60} containerStyle={tw `rounded-lg`} source={{ uri : isLoading ? "..." : apiUrl + service.userId.photoUrl }} />
              {/* Name and Description */}
@@ -105,31 +87,8 @@ const ServiceOneScreen = (props) => {
       </TouchableOpacity>
          <BottomSheet isVisible={visible} >
            <View style={tw `bg-white h-140 p-4 `}>
-            <Text style={tw `text-center text-lg font-semibold`}>Select Date</Text>
-            {/* Calendar */}
-            <CalendarPicker
-          selectedDayColor={`${Colors.primaryColor}`}
-          selectedDayStyle={tw`bg-[${Colors.primaryColor}] `}
-          selectedDayTextStyle={tw `text-white font-semibold`}
-          selectedDayTextColor={`#fff`}
-          onDateChange={(date)=>onDateChange(date)}
-          minDate={minDate}
-          
-        />
-        {/* Show date  */}
-
-        <View style={tw `h-18 items-center justify-center w-full bg-gray-200 rounded-xl`}>
-          <Text style={tw `text-xl font-semibold`}>{displayDate}</Text>
-        </View>
         {/* Confirm and cancel button */}
-          <View style={tw `flex-row items-center justify-center pt-3`}>
-          <TouchableOpacity onPress={()=> setVisible(false) }  style={ tw `bg-[${Colors.blackColor}] h-15   flex justify-center items-center rounded-2xl w-[45%]`} >
-        <Text style={tw `capitalize text-white text-2xl font-semibold`} >Cancel</Text>
-      </TouchableOpacity>
-          <TouchableOpacity onPress={()=> props.navigation.navigate("login")}  style={ tw `bg-[${Colors.primaryColor}] h-15   flex justify-center items-center ml-3 rounded-2xl w-[45%]`} >
-        <Text style={tw `capitalize text-white text-xl font-semibold`} >Confirm</Text>
-      </TouchableOpacity>
-          </View>
+          {status ==1 ? <PickDate setStatus={setStatus} setServiceDate={setServiceDate}  setVisible={setVisible}  /> : <TimeAndLocation setVisible={setVisible} setStatus={setStatus} serviceDate={serviceDate} service={isLoading ? "..." : service} />}
            </View>
          </BottomSheet>
          <Loader isLoading={isLoading} />

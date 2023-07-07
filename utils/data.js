@@ -121,6 +121,9 @@ const mockServices = [
   { id :  2, iconName : "star-half", bgColor : "bg-yellow-400" , title : "Rating recieved"},
   { id :  3, iconName : "receipt", bgColor : "bg-blue-400" , title :"Book received" },
   { id :  4, iconName : "card-outline", bgColor : "bg-blue-400" , title :"Payment received" },
+  { id :  5, iconName : "close-outline", bgColor : "bg-red-400" , title :"Book refused" },
 ]
+
+
 
   export { mockServices,notifcationsBase,serviceMap}

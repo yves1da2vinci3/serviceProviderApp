@@ -77,10 +77,9 @@ export const HomeContext = createContext()
    
    
    
-  
     
   return (
-    <HomeContext.Provider value={{setFirstime,firstTime,setFirsTime,isAlreadySaved,RemoveFavourite}}>
+    <HomeContext.Provider value={{setFirstime,firstTime,setFirsTime,AddFavourite,RemoveFavourite, isAlreadySaved,RemoveFavourite}}>
         {children}
     </HomeContext.Provider>
   )

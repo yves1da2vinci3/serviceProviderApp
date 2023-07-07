@@ -1803,6 +1803,13 @@
     "prompts" "^2.4.0"
     "semver" "^6.3.0"
 
+"@react-native-community/datetimepicker@^7.4.0":
+  "integrity" "sha512-+570921Ho0GwExpw4p3fGJRFZE3dcCWVLaxuVfEkoyvm3S4Fa69waeKFYuBhPkXEAK/WiusLDIgt9yuDvcGajw=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/datetimepicker/-/datetimepicker-7.4.0.tgz"
+  "version" "7.4.0"
+  dependencies:
+    "invariant" "^2.2.4"
+
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="
   "resolved" "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"
