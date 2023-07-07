@@ -1,11 +1,13 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import tw from 'twrnc'
 import { Avatar, BottomSheet, Icon } from '@rneui/base'
 import Colors from '../../../Constants/Colors'
 import { mockServices } from '../../../utils/data'
 import OfferItem from '../../../Components/OfferItem'
+import { AuthContext } from '../../../Context/AuthContext'
 const ServiceHome = () => {
+  const {user} = useContext(AuthContext)
   const [isLoading,setIsLoading] = useState(false)
   const [isVisible,setIsVisible] = useState(false)
   const [service,setService] = useState({})
@@ -14,12 +16,13 @@ const ServiceHome = () => {
     setService(service)
     setIsVisible(true)
     }
+
   return (
     <View style={tw `flex-1 bg-white pt-10 px-3`}>
       <View style={ tw `h-12 bg-white  flex-row px-5 items-center justify-between `} >
       <View style={ tw `flex flex-row items-center`}>
       <Icon name='person-circle-outline' type='ionicon' size={26}  color={`${Colors.primaryColor}`} />
-      <Text style={tw `ml-3 font-semibold`}>Yves lionel Diomande</Text>
+      <Text style={tw `ml-3 font-semibold`}>{user.fullname}</Text>
       </View>
        {/* Icon for notifications */}
        <TouchableOpacity onPress={()=> props.navigation.navigate("notifications")} style={tw `flex shadow-lg rounded-lg h-10  bg-white  w-12 justify-center items-center `}>

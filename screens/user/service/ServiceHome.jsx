@@ -79,7 +79,7 @@ const ServiceHome = (props) => {
 <View style={tw `flex flex-row flex-wrap `} >
 {
         foodFilter.map(filter => (
-          <TouchableOpacity onPress={()=> props.navigation.navigate("serviceList") } key={filter.id} activeOpacity={0.7}  style={ tw `flex m-2 mt-4  p-4 h-20 `}>
+          <TouchableOpacity onPress={()=> props.navigation.navigate("serviceList",{serviceType : filter.id,serviceName : filter.Title}) } key={filter.id} activeOpacity={0.7}  style={ tw `flex m-2 mt-4  p-4 h-20 `}>
             <View style={tw `h-15 items-center justify-center p-3 rounded w-full bg-${filter.color}-100`} >
             <Icon type='font-awesome-5'  name={filter.Iconname}  color={filter.color} size={34} />
             </View>

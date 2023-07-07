@@ -9,20 +9,24 @@ import SecondSignupScreen from './screens/Auth/SecondSignupScreen'
 import ThirdSignupScreen from './screens/Auth/ThirdSignupScreen'
 import ClientNav from './Navigators/bottomBar/ClientBottomNav'
 import ProviderBottomNav from './Navigators/bottomBar/ProviderBottomNav'
+import { useContext } from 'react'
+import { AuthContext } from './Context/AuthContext'
+import AuthStack from './Navigators/stacks/AuthStack'
+import { HomeContext } from './Context/HomeContext'
 const AppNavigator = () => {
     const Stack = createNativeStackNavigator()
+    const {isLogin,user} = useContext(AuthContext)
+    const {firstTime} = useContext(HomeContext)
+    console.log(isLogin)
   return (
    
         <Stack.Navigator>
-            <Stack.Screen options={{ headerShown : false }} name='onboarding' component={OnBoardingScreen} />
-            <Stack.Screen options={{ headerShown : false }} name='home' component={HomeScreen} />
-            <Stack.Screen options={{ headerShown : false }} name='login' component={LoginScreen} />
-            <Stack.Screen options={{ headerShown : false }} name='firstSignup' component={FirstSignupScreen} />
-            <Stack.Screen options={{ headerShown : false }} name='secondSignup' component={SecondSignupScreen} />
-            <Stack.Screen options={{ headerShown : true }} name='thirdSignup' component={ThirdSignupScreen} />
-            <Stack.Screen options={{ headerShown : false }} name='client' component={ClientNav} />
-            <Stack.Screen options={{ headerShown : false }} name='service' component={ProviderBottomNav} />
-
+          { !firstTime && <Stack.Screen options={{ headerShown : false }} name='onboarding' component={OnBoardingScreen} /> }
+            
+            { !isLogin  && <Stack.Screen options={{ headerShown : false }} name='auth' component={AuthStack} /> }
+            
+             { user.isServiceProvider ? <Stack.Screen options={{ headerShown : false }} name='service' component={ProviderBottomNav} /> : <Stack.Screen options={{ headerShown : false }} name='client' component={ClientNav} /> }
+            
         </Stack.Navigator>
    
     

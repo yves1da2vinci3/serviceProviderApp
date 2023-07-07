@@ -6,8 +6,11 @@ import Cleaning from '../assets/images/cleaning.jpg'
 import Cooking from '../assets/images/cooking.jpg'
 import driving from '../assets/images/driving.jpg'
 import { Icon } from '@rneui/base'
+import { useContext } from 'react'
+import { HomeContext } from '../Context/HomeContext'
 
 const OnBoardingScreen = (props) => {
+  const {setFirsTime} = useContext(HomeContext)
     const [selectId,setSelectedId] = useState(0)
     // TITLE
     const TitleMap = new Map()
@@ -19,6 +22,11 @@ const OnBoardingScreen = (props) => {
     DescriptionMap.set("0","TStreamline your cleaning routine and enjoy a cleaner, more organized space with our reliable and affordable cleaning services.")
     DescriptionMap.set("1"," Our affordable and convenient cooking services are designed to make your life easier.")
     DescriptionMap.set("2"," Our affordable and reliable driving services are designed to meet your needs and exceed your expectations.")
+
+    // moveToHome
+    const moveToHome = () => { 
+      setFirsTime()
+     }
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={tw `flex-1 bg-white pt-10 px-4`}>
       <View style={tw `h-118 relative  rounded-[20] w-full bg-[${Colors.primaryColor}]`} >
@@ -36,7 +44,7 @@ const OnBoardingScreen = (props) => {
         <Text style={tw `font-bold text-lg text-center `}>{TitleMap.get(`${selectId.toString()}`)}</Text>
         <Text style={tw `font-medium text-lg text-gray-500 text-center `}>{DescriptionMap.get(`${selectId.toString()}`)}</Text>
 
-        <TouchableOpacity  onPress={()=> selectId +1>2 ? props.navigation.navigate("home") : setSelectedId(selectId+1) } style={tw `self-center w-38 h-15 flex items-center justify-center mt-5 rounded-2xl bg-[${Colors.primaryColor}]`} >
+        <TouchableOpacity  onPress={()=> selectId +1>2 ? moveToHome() : setSelectedId(selectId+1) } style={tw `self-center w-38 h-15 flex items-center justify-center mt-5 rounded-2xl bg-[${Colors.primaryColor}]`} >
               <Text style={tw `text-white font-bold text-lg`}>{selectId +1>2 ? "Continue" : "Next"}</Text>
         </TouchableOpacity>
       </View>

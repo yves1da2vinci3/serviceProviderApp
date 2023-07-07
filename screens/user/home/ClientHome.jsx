@@ -1,5 +1,5 @@
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import tw from 'twrnc'
 import { Icon } from '@rneui/base'
 import Colors from '../../../Constants/Colors'
@@ -7,10 +7,12 @@ import carpenter from '../../../assets/images/carpenter.jpg'
 import Barber from '../../../assets/images/bar.jpg'
 import massage from '../../../assets/images/masseur.jpg'
 import electrician from '../../../assets/images/eletrician.jpg'
+import { AuthContext } from '../../../Context/AuthContext'
 const ClientHome = (props) => {
+  const {user} = useContext(AuthContext)
   const [selectedId,setSelectedId] = useState(6)
 
-  const foodFilter = [
+  const services = [
     {
       id: 1,
       Iconname : "broom",
@@ -75,7 +77,7 @@ const ClientHome = (props) => {
       <View style={ tw `h-12 bg-white  flex-row px-5 items-center justify-between `} >
       <View style={ tw `flex flex-row items-center`}>
       <Icon name='person-circle-outline' type='ionicon' size={26}  color={`${Colors.primaryColor}`} />
-      <Text style={tw `ml-3 font-semibold`}>Yves lionel Diomande</Text>
+      <Text style={tw `ml-3 font-semibold`}>{user.fullname}</Text>
       </View>
        {/* Icon for notifications */}
        <TouchableOpacity onPress={()=> props.navigation.navigate("notifications")} style={tw `flex shadow-lg rounded-lg h-10  bg-white  w-12 justify-center items-center `}>
@@ -88,7 +90,7 @@ const ClientHome = (props) => {
     </View>
     <View style={tw `flex-1 px-4`} >
     {/* Information */}
-    <Text style={tw `text-2xl tracking-wide font-medium`}>Hello, benjamin</Text>
+    <Text style={tw `text-2xl tracking-wide font-medium`}>Hello</Text>
     <Text style={tw `text-lg tracking-wide text-gray-400 font-medium`}>Which service do you want to pick today ?</Text>
     <View style={tw `h-58 mt-4 rounded-3xl bg-red-100 w-full relative`} >
       <View style={tw `absolute h-full w-40 bg-black bg-opacity-30 p-4 rounded-r-3xl  items-center justify-center z-30 right-0`} >
@@ -103,13 +105,13 @@ const ClientHome = (props) => {
     <View style={tw `h-45`} >
     <ScrollView horizontal  style={tw `mt-5 bg-white p-2 `} showsHorizontalScrollIndicator={false}  >
       {
-        foodFilter.map(filter => (
-          <TouchableOpacity activeOpacity={0.7} onPress={()=> setSelectedId(filter.id)} style={ tw `flex mx-2  p-4 h-20 `}>
-            <View style={tw `h-15 items-center justify-center p-3 rounded w-full bg-${filter.color}-100`} >
-            <Icon type='font-awesome-5'  name={filter.Iconname}  color={filter.color} size={34} />
+        services.map(service => (
+          <TouchableOpacity activeOpacity={0.7} onPress={()=> setSelectedId(service.id)} style={ tw `flex mx-2  p-4 h-20 `}>
+            <View style={tw `h-15 items-center justify-center p-3 rounded w-full bg-${service.color}-100`} >
+            <Icon type='font-awesome-5'  name={service.Iconname}  color={service.color} size={34} />
             </View>
           
-           <Text style={tw` text-gray-500 mt-3  text-center text-sm font-semibold`}>{filter.Title}</Text>
+           <Text style={tw` text-gray-500 mt-3  text-center text-sm font-semibold`}>{service.Title}</Text>
           </TouchableOpacity>
         ))
       }

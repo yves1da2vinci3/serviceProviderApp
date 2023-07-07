@@ -7,6 +7,7 @@ import ProfileStack from '../stacks/ClientProfileStack'
 import ServiceStack from '../stacks/ClientServiceStack'
 import OrderStack from '../stacks/ClientOrderStack'
 import { Icon } from '@rneui/base'
+import HomeFavourite from '../../screens/user/Favourite/HomeFavourite'
 const ProviderBottomNav = () => {
     const Tab = createBottomTabNavigator();
   return (
@@ -33,6 +34,12 @@ const ProviderBottomNav = () => {
                 <Icon color={`${ focused ? Colors.primaryColor : "lightgrey"}`} name="receipt" type='ionicon' />
                 
             </View>)} } name="order" component={OrderStack} />
+
+      <Tab.Screen options={{ headerShown : true , tabBarShowLabel : false, tabBarIcon: ({ focused }) => (
+            <View style={{ padding: 4, borderRadius: 8, alignItems: "center" }}>
+                <Icon color={`${ focused ? Colors.primaryColor : "lightgrey"}`} name="heart" type='ionicon' />
+                
+            </View>)} } name="favourite" component={HomeFavourite} />
 
       <Tab.Screen options={{ headerShown : false , tabBarShowLabel : false, tabBarIcon: ({ focused }) => (
             <View style={{ padding: 4, borderRadius: 8, alignItems: "center" }}>

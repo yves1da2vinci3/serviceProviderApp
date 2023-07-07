@@ -54,7 +54,7 @@ const FirstSignupScreen = (props) => {
    </TouchableOpacity>
    
    {/* Button */}
-    <TouchableOpacity onPress={()=> props.navigation.navigate("secondSignup")}  style={ tw `bg-[${Colors.primaryColor}] h-15 mt-15  flex justify-center items-center rounded-xl w-36 self-center`} >
+    <TouchableOpacity onPress={()=> props.navigation.navigate("secondSignup",{userType : userTypeIndex})}  style={ tw `bg-[${Colors.primaryColor}] h-15 mt-15  flex justify-center items-center rounded-xl w-36 self-center`} >
     <Icon name='arrow-forward-outline' type='ionicon' color="white" />
      </TouchableOpacity>
      <TouchableOpacity onPress={()=> props.navigation.navigate("login")} style={tw `self-center  mt-2  flex-row items-center`}>   

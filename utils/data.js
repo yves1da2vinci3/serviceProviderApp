@@ -100,6 +100,27 @@ const mockServices = [
       endTime: '12:00'
     }
   ];
-  
+  // service Map
 
-  export { mockServices}
+  const serviceMap = new Map()
+  
+  serviceMap.set(1,"Cleaning")
+  serviceMap.set(2,"Hand care")
+  serviceMap.set(3,"Cooking")
+  serviceMap.set(4,"Driving")
+  serviceMap.set(5,"electricity")
+  serviceMap.set(6,"Repair")
+  serviceMap.set(7,"Carpenter")
+  serviceMap.set(8,"Hair")
+
+
+  // notifcations informatio
+
+  const notifcationsBase = [ 
+  { id :  1, iconName : "checkmark", bgColor : "bg-green-400", title : "book confirmed" }, 
+  { id :  2, iconName : "star-half", bgColor : "bg-yellow-400" , title : "Rating recieved"},
+  { id :  3, iconName : "receipt", bgColor : "bg-blue-400" , title :"Book received" },
+  { id :  4, iconName : "card-outline", bgColor : "bg-blue-400" , title :"Payment received" },
+]
+
+  export { mockServices,notifcationsBase,serviceMap}

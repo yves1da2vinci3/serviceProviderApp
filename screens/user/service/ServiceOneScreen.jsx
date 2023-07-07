@@ -10,11 +10,15 @@ import ReviewItem from '../../../Components/ReviewItem'
 import { BottomSheet } from '@rneui/themed'
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment'
-const ServiceOneScreen = () => {
+import httpClient, { apiUrl } from '../../../config/api'
+import Loader from '../../../Components/Loader'
+const ServiceOneScreen = (props) => {
   const [minDate, setMinDate] = useState('')
   const [serviceDate, setServiceDate] = useState('')
   const [displayDate, setdisplayDate] = useState('')
-  
+  const [service,setService] = useState()
+  const [ratings,setratings] = useState([])
+  const [isLoading,setIsLoading] = useState(true)
  const [visible,setVisible] = useState(false)
   useEffect(()=>{
     var tomorrow = new Date();
@@ -35,8 +39,21 @@ const ServiceOneScreen = () => {
     </TouchableOpacity> 
   );
 
+  const fetchOneService = async() => { 
+    try {
+      const  {data} = await httpClient.get(`/users/services/${props.route.params.serviceId}`)
+      setService(data.service)
+      console.log(data.service)
+      setratings(data.ratings)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+    }
+   }
   useEffect(()=>{
-    navigation.setOptions({ headerLeft : () => <HeaderLeft />,title : "service  : cleaning" })
+    navigation.setOptions({ headerLeft : () => <HeaderLeft />,title : `${props.route.params.serviceName}` })
+    fetchOneService()
   },[navigation])
   return (
     <ScrollView  showsVerticalScrollIndicator={false} style={tw `bg-white flex-1 p-2`}>
@@ -44,7 +61,7 @@ const ServiceOneScreen = () => {
     {/* iamge and heart */}
     <View style={tw `h-52 bg-white relative w-full rounded-xl`} >
       {/* iamge */}
-      <Image style={tw `h-52  w-full  rounded-xl`} source={massage} />
+      <Image style={tw `h-52  w-full  rounded-xl`} source={{uri :  isLoading ? "..." : apiUrl + service.photoUrl}} />
       {/* like */}
       <View style={tw `h-10 w-10 top-3 right-4 bg-white absolute items-center justify-center rounded-full z-40`} >
         <Icon type='ionicon' name='heart-outline'  color={Colors.primaryColor} />
@@ -52,23 +69,23 @@ const ServiceOneScreen = () => {
     </View>
     {/* Title */}
     <View style={tw `flex-row justify-between px-3 items-center`} >
-    <Text style={tw `pl-2 text-4 mt-2`}>Full time massage</Text>
+    <Text style={tw `pl-2 text-4 mt-2`}>{isLoading?"..." :service.title}</Text>
 
     </View>
   
    </TouchableOpacity>
    <Text style={tw `text-lg font-semibold`}>Description</Text>
-   <Text style={tw `text-lg`}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</Text>
+   <Text style={tw `text-lg`}>{isLoading? "..." : service.description}</Text>
    <View style={tw `flex-row justify-between  items-center`} >
     <Text style={tw `pl-2 text-3 font-semibold text-gray-400 mt-2`}>12/03/2023 12h30min~13h30min</Text>
     <Text style={tw `pl-2 text-3 font-semibold text-gray-400 mt-2`}>1h00min</Text>
 
     </View>
     <View style={tw `h-20  w-full px-2  flex-row items-center`}>
-            <Avatar  size={60} containerStyle={tw `rounded-lg`} source={{ uri : "https://media.licdn.com/dms/image/C4E03AQGr1ATJxgLlFg/profile-displayphoto-shrink_800_800/0/1639553598181?e=2147483647&v=beta&t=UInTmNwhvz8vV051gs45Uo28k_e5aYk6NKnmMSRj5Zo"}} />
+            <Avatar  size={60} containerStyle={tw `rounded-lg`} source={{ uri : isLoading ? "..." : apiUrl + service.userId.photoUrl }} />
              {/* Name and Description */}
              <View style={tw ` ml-2`}>
-              <Text style={tw `font-bold`}>Yves Lionel Diomande</Text>
+              <Text style={tw `font-bold`}>{isLoading ?"... " : service.userId.fullname}</Text>
               <Text style={tw `font-semibold text-gray-500 mt-4`}>+3 years of experience</Text>
              </View>
              {/* status */}
@@ -115,6 +132,7 @@ const ServiceOneScreen = () => {
           </View>
            </View>
          </BottomSheet>
+         <Loader isLoading={isLoading} />
     </ScrollView>
   )
 }
