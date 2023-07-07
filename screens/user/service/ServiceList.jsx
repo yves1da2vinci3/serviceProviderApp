@@ -74,7 +74,7 @@ const fetchServices = async() => {
            
            <View style={tw `flex-row  items-center`} >
            <Icon type='ionicon' name='star' color={Colors.primaryColor} />
-           <Text style={tw `font-bold text-lg text-[${Colors.primaryColor}] `}> {service.rating}</Text>
+           <Text style={tw `font-bold text-lg text-[${Colors.primaryColor}] `}> {service.rating.toFixed(2)}</Text>
            </View>
           </View>
    </TouchableOpacity> )) }

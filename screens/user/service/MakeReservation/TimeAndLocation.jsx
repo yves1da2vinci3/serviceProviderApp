@@ -58,6 +58,7 @@ const navigation = useNavigation()
         askerId : user._id,
        location,
        endTime,
+       offerId : service._id,
        startTime,
        amount : (calculateHourDifference(formatTime(startTime) ,formatTime(endTime) )*service.hourRate).toFixed(2),
        providerId :  service.userId._id,

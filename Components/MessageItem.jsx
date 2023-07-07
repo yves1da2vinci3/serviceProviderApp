@@ -4,16 +4,16 @@ import Colors from '../Constants/Colors'
 const me = `${Colors.primaryColor}`
 const away =  'lightgrey'
 
-const userId = "user1"
+
 const MessageItem = ({message}) => {
   
 //   const { user } = useContext(AuthContext)
     // const isMe = user.uid === message.senderId ;
-    const isMe = userId === message.senderId ;
+   
   return (
     <View style={[styles.container,
-        isMe ? styles.rightContainer : styles.leftContainer    ]}>
-      <Text style={{color : isMe ? 'black' : 'white' }}>{message.content}</Text>
+        message.isMe ? styles.rightContainer : styles.leftContainer    ]}>
+      <Text style={{color : message.isMe ? 'black' : 'white' }}>{message.content}</Text>
     </View>
   )
 

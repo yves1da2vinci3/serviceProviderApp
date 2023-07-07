@@ -77,9 +77,9 @@ const ServiceOneScreen = (props) => {
              </View>
          </View>
          <Accordion title="Ratings and comments" children={<ScrollView showsVerticalScrollIndicator={false} style={tw `h-auto`}>
-          <ReviewItem />
-          <ReviewItem />
-          <ReviewItem />
+          {isLoading ? <Text>Loading</Text> :ratings.map((rating,index) => (<ReviewItem rating={rating} key={index} />) )  }
+          
+          
          </ScrollView>}  />
 
          <TouchableOpacity   onPress={()=> setVisible(true)} style={ tw `bg-[${Colors.primaryColor}] h-15  self-center   flex justify-center items-center ml-3 rounded-2xl w-[45%]`} >

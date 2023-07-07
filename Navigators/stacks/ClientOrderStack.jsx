@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import OrderHome from '../../screens/user/order/OrderHome'
-import ChatScreen from '../../screens/user/order/ChatScreen'
+import ChatScreen from '../../screens/service/order/ChatScreen'
 import PaymentScreen from '../../screens/user/order/PaymentScreen'
 import RatingScreen from '../../screens/user/order/RatingScreen'
 

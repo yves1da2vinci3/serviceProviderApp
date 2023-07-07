@@ -15,7 +15,7 @@ const ServiceHome = (props) => {
   const [isLoading,setIsLoading] = useState(true)
   const [isVisible,setIsVisible] = useState(false)
   const [services,setServices] = useState([])
-  const [service,setService] = useState({})
+  const [service,setService] = useState(null)
   const [Number,setNumber] = useState(Math.random())
 
   const chooseService = (service) => { 
@@ -104,6 +104,7 @@ const ServiceHome = (props) => {
     <View style={ tw`h-[111] w-full bg-white flex px-2 `}>
       <Icon type='ionicon' name='close-outline'  size={25} onPress={()=> setIsVisible(false)} style={tw `self-end mr-4 mt-2`} />
     <View  style={tw `  relative p-4 flex-row  flex`} >
+      
       <Avatar size={80} rounded={true} source={{ uri : service ?  apiUrl + service.askerId.photoUrl : "" } } />
     <View style={tw `ml-5 pt-3 flex flex-col`}>
       <Text style={tw `text-xl font-semibold `}>{ service ? service.askerId.fullname :  "george grear"}</Text>
@@ -122,13 +123,13 @@ const ServiceHome = (props) => {
   <View style={ tw `flex flex-1  mt-2 mb-3 items-center w-full flex-row`}>
     <Icon type='ionicon' name='calendar-outline' color={Colors.primaryColor} />
   {/* <Text ellipsizeMode="tail" style={tw `text-sm text-black font-bold ml-2` }>{ service.date ? formatDate(service.date) : "12/01/2022"}</Text> */}
-  <Text ellipsizeMode="tail" style={tw `text-sm text-black font-bold ml-2` }>{ service.Date ? formatDate(service.Date)  : "12/01/2022"}</Text>
+  <Text ellipsizeMode="tail" style={tw `text-sm text-black font-bold ml-2` }>{ service ? formatDate(service.Date)  : "12/01/2022"}</Text>
 
   </View>
   <View style={ tw `flex flex-1  mt-2 mb-3 items-center  flex-row`}>
     <Icon type='ionicon' name='time-outline' color={Colors.primaryColor} />
     {/* { service.date ?    <Text ellipsizeMode="tail" style={tw `text-sm text-black font-bold ml-2` }> {RenderTime(service.startTime)}  - {RenderTime(service.endTime)}  </Text> : <Text>12AM-3PM</Text> } */}
-    { service.Date ?    <Text ellipsizeMode="tail" style={tw `text-sm text-black font-bold ml-2` }> {formatTime(service.startTime) }  - {formatTime(service.endTime) }   </Text> : <Text>12AM-3PM</Text> }
+    { service ?    <Text ellipsizeMode="tail" style={tw `text-sm text-black font-bold ml-2` }> {formatTime(service.startTime) }  - {formatTime(service.endTime) }   </Text> : <Text>12AM-3PM</Text> }
 
 
   </View>
@@ -142,11 +143,11 @@ const ServiceHome = (props) => {
   </View>
 
 
-       { service.status === 0 &&  <TouchableOpacity onPress={()=> answerReservation("accept")}  style={ tw `bg-[${Colors.primaryColor}] h-15   flex justify-center items-center rounded-xl w-full`} >
+       { service && service.status === 0 &&  <TouchableOpacity onPress={()=> answerReservation("accept")}  style={ tw `bg-[${Colors.primaryColor}] h-15   flex justify-center items-center rounded-xl w-full`} >
         <Text style={tw `capitalize text-white text-xl font-semibold`} >Accept</Text>
       </TouchableOpacity> } 
       
-      { service.status === 0 && <TouchableOpacity onPress={()=>  answerReservation("reject")}  style={ tw `bg-[${Colors.greyColor}] h-15  mt-4  flex justify-center items-center rounded-xl w-full`} >
+      { service && service.status === 0 && <TouchableOpacity onPress={()=>  answerReservation("reject")}  style={ tw `bg-[${Colors.greyColor}] h-15  mt-4  flex justify-center items-center rounded-xl w-full`} >
         <Text style={tw `capitalize text-white text-xl font-semibold`} >reject</Text>
       </TouchableOpacity> }
      
