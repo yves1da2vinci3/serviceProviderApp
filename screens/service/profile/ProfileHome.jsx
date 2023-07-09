@@ -12,7 +12,7 @@ import { serviceMap } from '../../../utils/data'
 
 
 const ProfileHome = (props) => {
-  const {user} = useContext(AuthContext)
+  const {user,logout} = useContext(AuthContext)
   const [Offer,setOffer] = useState({})
   const [isLoading,setIsLoading] = useState(true)
   const fetchOffer = async() => { 
@@ -30,6 +30,10 @@ const ProfileHome = (props) => {
       fetchOffer()
     },[])
   )
+  const Logout = () => { 
+    logout()
+    props.navigation.navigate("login")
+    }
   return (
     <View style={tw `flex-1 pt-10 bg-white px-3`}>
 {/* user Info */}
@@ -58,6 +62,10 @@ const ProfileHome = (props) => {
     <TouchableOpacity onPress={()=> props.navigation.navigate("modifyOffer",{offer : Offer ,hasOffer : Offer ? true : false})} style={tw `h-13 border-b-gray-200 border-b-2  flex items-center p-2 flex-row`}>
       <Icon type='ionicon' name='receipt-outline' />
       <Text style={tw `font-bold ml-4 text-md`}> {isLoading ? "..." : Offer ? "Modify offer" : "Create offer" } </Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={()=> Logout()}  style={tw `h-13 border-b-gray-200 border-b-2  flex items-center p-2 flex-row`}>
+      <Icon type='ionicon' name='log-out-outline' />
+      <Text style={tw `font-bold ml-4 text-md`}> logout </Text>
     </TouchableOpacity>
   </View>
     </View>

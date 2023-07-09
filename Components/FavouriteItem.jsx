@@ -31,6 +31,7 @@ const FavouriteItem = ({
     );
   };
 
+  console.log("favourite :", favourite)
   const handlePress = () => {
     if (isVisible && favourtitesDeltedIds.findIndex((fav) => favourite.id === fav.id) !== -1) {
       removeToDeletion();
@@ -51,18 +52,18 @@ const FavouriteItem = ({
     >
       <Image
         style={tw`h-35 bg-blue-200 bg-opacity-20 w-35 rounded`}
-        source={barber}
+        source={{ uri : apiUrl+ favourite.offer.photoUrl }}
       />
       {/* Others Informations */}
       <View style={tw`flex-1 flex justify-center py-1 ml-2`}>
-        <Text style={tw`font-bold capitalize text-lg`}>barber care</Text>
-        <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500</Text>
+        <Text style={tw`font-bold capitalize text-lg`}>{favourite.offer.title}</Text>
+        <Text>{favourite.offer.description.substring(0,120)}</Text>
         <View style={tw ` flex-row   px-4 mt-1 justify-between  pl-2`}>
-            <Text style={tw `font-bold text-2xl`}> 14 $</Text>
+            <Text style={tw `font-bold text-2xl`}> {favourite.offer.hourRate} $</Text>
            
            <View style={tw `flex-row  items-center`} >
            <Icon type='ionicon' name='star' color={Colors.primaryColor} />
-           <Text style={tw `font-bold text-xl text-[${Colors.primaryColor}] `}> 4.3</Text>
+           <Text style={tw `font-bold text-xl text-[${Colors.primaryColor}] `}> {favourite.offer.rating.toFixed(2)}</Text>
            </View>
           </View>
       </View>

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Image ,ScrollView} from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import tw from 'twrnc'
 import { useNavigation } from '@react-navigation/native'
 import { Avatar, Icon } from '@rneui/base'
@@ -13,6 +13,8 @@ import Loader from '../../../Components/Loader'
 import ReservationStack from './MakeReservation/ReservationStack'
 import TimeAndLocation from './MakeReservation/TimeAndLocation'
 import PickDate from './MakeReservation/PickDate'
+import { AuthContext } from '../../../Context/AuthContext'
+import { HomeContext } from '../../../Context/HomeContext'
 const ServiceOneScreen = (props) => {
   const [serviceDate, setServiceDate] = useState('')
  
@@ -22,7 +24,8 @@ const ServiceOneScreen = (props) => {
  const [visible,setVisible] = useState(false)
  const [status,setStatus] =useState(1)
   const navigation = useNavigation()
-
+  const {user} =useContext(AuthContext)
+  const {isAlreadySaved,AddFavourite,RemoveFavourite} = useContext(HomeContext)
   const HeaderLeft = () => ( 
     <TouchableOpacity onPress={()=> navigation.goBack() } style={tw `h-10 mb-2 items-center justify-center rounded-lg mr-5 w-10 bg-[${Colors.blackColor}]`} >
       <Icon  name='arrow-back-outline' color="white" type='ionicon' />
@@ -53,9 +56,9 @@ const ServiceOneScreen = (props) => {
       {/* iamge */}
       <Image style={tw `h-52  w-full  rounded-xl`} source={{uri :  isLoading ? "..." : apiUrl + service.photoUrl}} />
       {/* like */}
-      <View style={tw `h-10 w-10 top-3 right-4 bg-white absolute items-center justify-center rounded-full z-40`} >
-        <Icon type='ionicon' name='heart-outline'  color={Colors.primaryColor} />
-      </View>
+      <TouchableOpacity onPress={()=> isAlreadySaved( isLoading ?"...": service._id)? RemoveFavourite(isLoading ?"...": service._id,true,user._id) : AddFavourite(isLoading ?"...": service._id,true,user._id) } style={tw `h-10 w-10 top-3 right-4 bg-white absolute items-center justify-center rounded-full z-40`} >
+        <Icon type='ionicon' name={isAlreadySaved(isLoading ?"...": service._id)? `heart` : "heart-outline"}  color={Colors.primaryColor} />
+      </TouchableOpacity>
     </View>
     
   

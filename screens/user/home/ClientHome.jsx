@@ -8,9 +8,20 @@ import Barber from '../../../assets/images/bar.jpg'
 import massage from '../../../assets/images/masseur.jpg'
 import electrician from '../../../assets/images/eletrician.jpg'
 import { AuthContext } from '../../../Context/AuthContext'
+import httpClient, { apiUrl } from '../../../config/api'
+import { useFocusEffect } from '@react-navigation/native'
+import { HomeContext } from '../../../Context/HomeContext'
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 const ClientHome = (props) => {
-  const {user} = useContext(AuthContext)
+  const {user,logout} = useContext(AuthContext)
   const [selectedId,setSelectedId] = useState(6)
+  const [isLoading,setIsLoading] = useState(true)
+  const [Services,setServices] = useState([true])
 
   const services = [
     {
@@ -43,42 +54,55 @@ const ClientHome = (props) => {
     },
    
   ]
+  const {isAlreadySaved,AddFavourite,RemoveFavourite} = useContext(HomeContext)
 
-  const popularServices = [ 
-     {
-    id : 1,
-    name : "Barber",
-    imageLink : Barber,
-    price : "34",
-    rating : "4.3"
-  } ,
-     {
-    id : 1,
-    name : "Massage",
-    imageLink : massage,
-    price : "60",
-    rating : "4"
+const fetchPopularsServices = async() => { 
+  try {
+    const {data} = await httpClient.get(`/users/services/popular`)
+    setServices(data.mostDemandingOffers)
+    setIsLoading(false)
+  } catch (error) {
+    console.log(error)
+    setIsLoading(false)
+  }
+ }
+ useFocusEffect(
+  React.useCallback(()=>{
+ fetchPopularsServices()
+  },[])
+ )
 
-
-  } ,
-     {
-    id : 1,
-    name : "Electrician",
-    imageLink : electrician,
-    price : "14",
-    rating : "5"
-
-  } ,
-
-]
+ const Logout = () => { 
+  logout()
+  setTimeout(()=>{
+    props.navigation.navigate("login")
+  },1000)
+  }
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={tw `bg-white flex-1 pb-20 pt-10`}>
       {/* NavBar */}
       <View style={ tw `h-12 bg-white  flex-row px-5 items-center justify-between `} >
+      <Menu  style={tw ` `}>
+      <MenuTrigger  >
       <View style={ tw `flex flex-row items-center`}>
       <Icon name='person-circle-outline' type='ionicon' size={26}  color={`${Colors.primaryColor}`} />
       <Text style={tw `ml-3 font-semibold`}>{user.fullname}</Text>
       </View>
+      </MenuTrigger>
+      <MenuOptions>
+
+        <MenuOption style={tw `flex flex-row items-center h-10 `} onSelect={() =>  props.navigation.navigate("profile") } >
+          
+            <Icon  style={tw `ml-1`} type='font-awesome' name='user' />
+          <Text style={tw `ml-1`} >See profile</Text>
+        </MenuOption>
+        <MenuOption style={tw `flex flex-row items-center h-10 `} onSelect={() =>  Logout()} >
+            <Icon  style={tw `ml-1`} type='ionicon' name='log-out-outline' />
+          <Text style={tw `ml-1`} > logout </Text>
+        </MenuOption>
+      </MenuOptions>
+    </Menu>
+      
        {/* Icon for notifications */}
        <TouchableOpacity onPress={()=> props.navigation.navigate("notifications")} style={tw `flex shadow-lg rounded-lg h-10  bg-white  w-12 justify-center items-center `}>
        <View style={tw `flex justify-center items-center relative`} >
@@ -121,24 +145,24 @@ const ClientHome = (props) => {
 
   <View style={tw `flex-1 `}>
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={tw `mt-2`} >
-        { popularServices.map(popS => (<View style={tw `bg-white mx-2  h-50 mb-20 w-45 rounded-xl shadow`} >
+        { isLoading ? <Text>...</Text> : Services.map(popS => (<View style={tw `bg-white mx-2  h-50 mb-20 w-45 rounded-xl shadow`} >
     {/* iamge and heart */}
     <View style={tw `h-30 bg-white relative w-full rounded-xl`} >
       {/* iamge */}
-      <Image style={tw `h-30 bg-blue-500 w-full  rounded-xl`} source={popS.imageLink} />
+      <Image style={tw `h-30 bg-blue-500 w-full  rounded-xl`} source={{ uri : apiUrl + popS.photoUrl}} />
       {/* like */}
-      <View style={tw `h-10 w-10 top-3 right-4 bg-white absolute items-center justify-center rounded-full z-40`} >
-        <Icon type='ionicon' name='heart-outline'  color={Colors.primaryColor} />
-      </View>
+      <TouchableOpacity onPress={()=> isAlreadySaved( isLoading ?"...": popS._id)? RemoveFavourite(isLoading ?"...": popS._id,true,user._id) : AddFavourite(isLoading ?"...": popS._id,true,user._id) } style={tw `h-10 w-10 top-3 right-4 bg-white absolute items-center justify-center rounded-full z-40`} >
+        <Icon type='ionicon' name={isAlreadySaved(isLoading ?"...": popS._id)? `heart` : "heart-outline"}  color={Colors.primaryColor} />
+      </TouchableOpacity>
     </View>
     {/* Title */}
-    <Text style={tw `pl-2 text-4 mt-2`}>{popS.name}</Text>
+    <Text style={tw `pl-2 text-4 mt-2`}>{popS.title}</Text>
     <View style={tw ` flex-row   px-4 mt-1 justify-between  pl-2`}>
-            <Text style={tw `font-bold text-2xl`}> {popS.price} $</Text>
+            <Text style={tw `font-bold text-2xl`}> {popS.hourRate} $</Text>
            
            <View style={tw `flex-row  items-center`} >
            <Icon type='ionicon' name='star' color={Colors.primaryColor} />
-           <Text style={tw `font-bold text-[${Colors.primaryColor}] `}> {popS.rating}</Text>
+           <Text style={tw `font-bold text-[${Colors.primaryColor}] `}> {popS.rating.toFixed(2)}</Text>
            </View>
           </View>
    </View> )) }

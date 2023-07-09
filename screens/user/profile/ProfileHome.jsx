@@ -31,21 +31,11 @@ const ProfileHome = (props) => {
     </TouchableOpacity>
   );
 };
- const HeaderRight = () => {
-  if (!navigation) {
-    return null;
-  }
 
-  return (
-    <TouchableOpacity onPress={() => Logout()} style={tw `h-10 mb-3 items-center justify-center rounded-lg w-10 bg-[${Colors.blackColor}]`} >
-      <Icon name='log-out-outline' color="white" type='ionicon' />
-    </TouchableOpacity>
-  );
-};
 
 
   useEffect(()=>{
-    navigation.setOptions({ headerLeft : () => <HeaderLeft /> ,title : "my profile" ,headerRight : () => <HeaderRight />  })
+    navigation.setOptions({ headerLeft : () => <HeaderLeft /> ,title : "my profile" })
   },[navigation])
 
 // Pick Image
@@ -98,10 +88,7 @@ const ProfileHome = (props) => {
       
     }
    }
-   const Logout = () => { 
-    logout()
-    props.navigation.navigate("auth")
-    }
+ 
   return (
     <View style={tw `flex-1 bg-white items-center  p-4`}>
       {/* IMage */}
@@ -110,7 +97,7 @@ const ProfileHome = (props) => {
           <Icon type='ioncion' name='camera' />
         </TouchableOpacity>
         <Image style={tw `h-70 w-60 rounded-lg`} resizeMode="cover" source={{ uri : image ? image.uri :  apiUrl + user.photoUrl }} />
-        <Text style={tw `text-center text-lg mt-4 font-semibold`}>{user.fullname}</Text>
+        <Text style={tw `text-center text-lg mt-4 font-semibold`}>{ user.fullname}</Text>
       
       </View>
 
@@ -123,7 +110,7 @@ const ProfileHome = (props) => {
      {/* Phone Number */}
     <View style={tw `h-20 mt-4 `} >
      <Text style={tw `font-semibold mb-2`}>Mobile Number</Text>
-     <TextInput onChangeText={(text)=> setPhoneNumber(text)} style={tw `flex-1 bg-white rounded-lg 2 shadow  p-2 `} placeholder='enter your phoneNumber' defaultValue={user.phoneNumber.toString().padStart(10,"0")}  />
+     <TextInput onChangeText={(text)=> setPhoneNumber(text)} style={tw `flex-1 bg-white rounded-lg 2 shadow  p-2 `} placeholder='enter your phoneNumber'   />
     </View>
     
     <TouchableOpacity onPress={()=> modifyProfile()}  style={ tw `bg-[${Colors.primaryColor}] h-15   flex justify-center items-center  rounded-2xl mt-10 self-center w-[45%]`} >

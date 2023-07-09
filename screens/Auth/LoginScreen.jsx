@@ -49,10 +49,14 @@ const LoginScreen = (props) => {
   setIsLoading(true)
   try {
   const { data} = await httpClient.post("/auth/login",{email,password})
-  setSession(data.user)
-  props.navigation.navigate(`${data.user.isServiceProvider ?"service" : "client"}`)
-  // console.log(reponse)
   setIsLoading(false)  
+  setSession(data.user)
+
+  // Make sure that the first setIsLoading dosent work 
+  setTimeout(()=> {
+    props.navigation.navigate(`${data.user.isServiceProvider ?"service" : "client"}`)
+  },1000)
+  // console.log(reponse)
   } catch (error) {
     console.log(error)
     toast.show(`${error.response.data.message}`, {

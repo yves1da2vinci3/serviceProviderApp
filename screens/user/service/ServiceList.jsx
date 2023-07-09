@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import tw from 'twrnc'
 import { useNavigation } from '@react-navigation/native'
 import { Icon, Image } from '@rneui/base'
@@ -9,8 +9,12 @@ import massage from '../../../assets/images/masseur.jpg'
 import electrician from '../../../assets/images/eletrician.jpg'
 import Loader from '../../../Components/Loader'
 import httpClient, { apiUrl } from '../../../config/api'
+import {HomeContext} from '../../../Context/HomeContext'
+import { AuthContext } from '../../../Context/AuthContext'
 const ServiceList = (props) => {
+  const {user} =useContext(AuthContext)
   const navigation = useNavigation()
+  const {isAlreadySaved,AddFavourite,RemoveFavourite} = useContext(HomeContext)
   const TitleComponent = ({  }) => {
     return (
       <View style={tw`flex-row items-center`}>
@@ -59,9 +63,9 @@ const fetchServices = async() => {
       {/* iamge */}
       <Image style={tw `h-52  w-full  rounded-xl`} source={{ uri : apiUrl + service.photoUrl}} />
       {/* like */}
-      <View style={tw `h-10 w-10 top-3 right-4 bg-white absolute items-center justify-center rounded-full z-40`} >
-        <Icon type='ionicon' name='heart-outline'  color={Colors.primaryColor} />
-      </View>
+      <TouchableOpacity onPress={()=> isAlreadySaved(service._id)? RemoveFavourite(service._id,true,user._id) : AddFavourite(service._id,true,user._id) } style={tw `h-10 w-10 top-3 right-4 bg-white absolute items-center justify-center rounded-full z-40`} >
+        <Icon type='ionicon' name={isAlreadySaved(service._id)? `heart` : "heart-outline"}  color={Colors.primaryColor} />
+      </TouchableOpacity>
     </View>
     {/* Title */}
     <View style={tw `flex-row justify-between px-3 items-center`} >

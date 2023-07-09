@@ -1,5 +1,6 @@
 import React, {createContext,useEffect,useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import httpClient from '../config/api';
 
 export const HomeContext = createContext()
 
@@ -24,18 +25,18 @@ export const HomeContext = createContext()
      }
      const isAlreadySaved = (serviceId) => { 
        
-          return FavouritesServicesIds.some(apartementId => apartementId === serviceId )
+          return FavouritesServicesIds.some(Serv => Serv === serviceId )
 
 
    }
-   const AddFavourite = async(entityId,withRequest) => { 
+   const AddFavourite = async(entityId,withRequest,userId) => { 
     
     const newServicesFavourites = [...FavouritesServicesIds,entityId];
-    setFavouritesApartements(newServicesFavourites)
+    setfavouritesServicesIds(newServicesFavourites)
     const  favouritesServicesString = JSON.stringify(newServicesFavourites)
     if(withRequest){
-      await httpClient.put(`users/favourite?type=add`,{
-          idToAdd : entityId
+      await httpClient.post(`users/favourites/${userId}`,{
+          offerId : entityId
       })
   }
     try {
@@ -47,17 +48,18 @@ export const HomeContext = createContext()
    
   }
   
- const RemoveFavourite = async(entityId,withRequest) => { 
+ const RemoveFavourite = async(entityId,withRequest,userId) => { 
     console.log("entity :",entityId,"withRequest : ",withRequest)
 
   
     FavouritesServicesIds.push(entityId)
     const newServiceFavourites = FavouritesServicesIds.filter(serviceId => serviceId !== entityId);
     setfavouritesServicesIds(newServiceFavourites)
-    const  favouritesServicesString = JSON.stringify(newAppartementsFavourites)
+    const  favouritesServicesString = JSON.stringify(newServiceFavourites)
     if(withRequest){
-        await httpClient.put(`users/favourite`,{
-            idToRemove : entityId
+      const offerIds = [entityId]
+        await httpClient.put(`users/favourites/${userId}`,{
+          offerIds 
         })
     }
    

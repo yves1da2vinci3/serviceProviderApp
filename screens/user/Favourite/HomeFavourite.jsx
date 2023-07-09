@@ -9,9 +9,11 @@ import { useToast } from 'react-native-toast-notifications'
 import { AuthContext } from '../../../Context/AuthContext'
 import Loader from '../../../Components/Loader'
 import { HomeContext } from '../../../Context/HomeContext'
+import httpClient from '../../../config/api'
 const HomeFavourite = () => {
     const toast = useToast()
     const {RemoveFavourite} = useContext(HomeContext)
+    const {user} = useContext(AuthContext)
     const [isLoading,setIsLoading] = useState(true)
     const [deletionModal,setdeletionModal] = useState(false)
     const [favourites,setFavourties] = useState([])
@@ -26,9 +28,9 @@ const HomeFavourite = () => {
        
         const fetchUserFavourite = async() => { 
             try {
-                const {data} = await httpClient.get("users/favourite")
-                  console.log("from : ",data.favourites)
-                  setFavourties(data.favourites)
+                const {data} = await httpClient.get(`/users/favourites/${user._id}`)
+                  console.log("from : ",data)
+                  setFavourties(data.userFavorites.Favourites)
                   setIsLoading(false)
             } catch (error) {
                 toast.show(`${error?.response?.data?.message}`, {
@@ -106,11 +108,10 @@ const HomeFavourite = () => {
 
 </Overlay>
       {/* favourite */}
-     {/* { isLoading ? <Text>Loading...</Text> : favourites.length === 0? <Text style={tw `mt-3 text-center` }>Aucun favouris pour l'instant</Text> : favourites.map((favourite,index)=> (
+     { isLoading ? <Text>Loading...</Text> : favourites.length === 0? <Text style={tw `mt-3 text-center` }>Aucun favouris pour l'instant</Text> : favourites.map((favourite,index)=> (
         <FavouriteItem setisVisible={setisVisible} isVisible={isVisible} setFavourtiesDeltedIds={setFavourtiesDeltedIds}  favourtitesDeltedIds={favourtitesDeltedIds} favourite={favourite} key={index} />
-     )) } */}
-     <FavouriteItem />
-     <FavouriteItem />
+     )) }
+     
 
      { isVisible && favourtitesDeltedIds.length>0 && (<View style={tw `h-40 absolute bottom-0 z-20 w-full items-center justify-center bg-slate-100 p-2`}>
             <View style={tw `flex flex-row items-center`}>

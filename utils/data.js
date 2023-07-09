@@ -124,6 +124,20 @@ const mockServices = [
   { id :  5, iconName : "close-outline", bgColor : "bg-red-400" , title :"Book refused" },
 ]
 
+const months = [
+  { id: 1, monthName: 'January' },
+  { id: 2, monthName: 'February' },
+  { id: 3, monthName: 'March' },
+  { id: 4, monthName: 'April' },
+  { id: 5, monthName: 'May' },
+  { id: 6, monthName: 'June' },
+  { id: 7, monthName: 'July' },
+  { id: 8, monthName: 'August' },
+  { id: 9, monthName: 'September' },
+  { id: 10, monthName: 'October' },
+  { id: 11, monthName: 'November' },
+  { id: 12, monthName: 'December' },
+];
 
 
-  export { mockServices,notifcationsBase,serviceMap}
+  export { mockServices,notifcationsBase,serviceMap,months}
